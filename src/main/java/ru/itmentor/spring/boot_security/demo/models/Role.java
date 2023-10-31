@@ -18,7 +18,7 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @ManyToMany(mappedBy = "role")
-    private Set<Person> persons = new HashSet<>();
+    private Set<Person> persons;
 
     public Role() {
     }

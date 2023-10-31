@@ -34,7 +34,6 @@ public class Person {
     @JoinTable(name = "person_roles",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-
     private Set<Role> role;
 
     public Person() {
