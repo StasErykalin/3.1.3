@@ -271,6 +271,7 @@
   <div class="login">
     <h1>Вход</h1>
     <form name="f" method="post" action="/process_login">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
       <p><input type="text" name="username" value="" placeholder="Логин или Email"></p>
       <p><input type="password" name="password" value="" placeholder="Пароль"></p>
       <p class="submit"><input type="submit" name="commit" value="Войти"></p>

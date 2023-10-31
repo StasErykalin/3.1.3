@@ -57,7 +57,7 @@
     <form action="/admin/reg">
         <button type="submit">Добавить пользователя</button>
     </form>
-    <form action="/logout">
+    <form th:action="@{/logout}" th:method="POST">
         <button type="submit">Выход</button>
     </form>
 

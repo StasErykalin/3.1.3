@@ -53,7 +53,7 @@
             </tr>
         </tbody>
     </table>
-    <form action="/logout">
+    <form th:action="@{/logout}" th:method="POST">
         <button type="submit">Выход</button>
     </form>
 </body>

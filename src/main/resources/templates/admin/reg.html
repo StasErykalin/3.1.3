@@ -277,11 +277,11 @@
         <h1>Новый пользователь</h1>
         <form th:method="POST" th:action="@{/admin/reg}" th:object="${person}">
             <input type="text" th:field="*{username}" id="username" placeholder="Ник">
-            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></div>
+            <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" ></div>
             <input type="text" th:field="*{name}" id="name" placeholder="Имя">
-            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" ></div>
-            <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
-            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
+            <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" ></div>
+            <input type="password" th:field="*{password}" id="password" placeholder="Пароль">
+            <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >Password Error</div>
             <p class="submit"><input type="submit" value="Добавить"></p>
         </form>
     </div>

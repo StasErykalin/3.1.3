@@ -40,10 +40,10 @@ public class AdminController {
         if(bindingResult.hasErrors())
             return "/admin/reg";
         personService.addNewPerson(person);
-        return "admin/adminpanel";
+        return "redirect:adminpanel";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/{id}")
     public String edit(Model model, @PathVariable("id") int id){
         model.addAttribute("person", personService.fingById(id));
         return "admin/edit";
@@ -52,13 +52,13 @@ public class AdminController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") Person user, @PathVariable("id") int id){
         personService.update(user);
-        return "redirect:admin/adminpanel";
+        return "redirect:adminpanel";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         personService.delete(id);
-        return "redirect:admin/adminpanel";
+        return "redirect:adminpanel";
 
     }
 

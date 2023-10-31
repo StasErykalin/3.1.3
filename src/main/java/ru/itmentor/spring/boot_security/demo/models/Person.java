@@ -1,5 +1,7 @@
 package ru.itmentor.spring.boot_security.demo.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -24,7 +26,7 @@ public class Person {
     private String name;
 
     @NotEmpty(message = "Поле пароль обязательно к заполнению")
-    @Size(min=4, max=50, message = "Пароль должен быть не короче 6 или длиннее 50 символов, состоять должен из латинских символов разного регистра")
+    @Size(min=5, max=50, message = "Пароль должен быть не короче 5 или длиннее 50 символов, состоять должен из латинских символов разного регистра")
     @Column(name = "password")
     private String password;
 

@@ -48,15 +48,14 @@
   </tr>
   </tbody>
 </table>
-<form action="/logout">
-  <button type="submit">Выход</button>
-</form>
-
-<form th:action="@{/admin/{id}/edit (id=${person.getId()})}">
+<form  th:action="@{/admin/{id} (id=${person.getId()})}">
   <button type="submit">Редактировать</button>
 </form>
-<form th:method="DELETE" th:action="@{/{id}(id=${person.getId()})}">
+<form th:method="DELETE" th:action="@{/admin/{id} (id=${person.getId()})}">
   <button type="submit">Удалить</button>
+</form>
+<form th:action="@{/logout}" th:method="POST">
+  <button type="submit">Выход</button>
 </form>
 
 </body>
