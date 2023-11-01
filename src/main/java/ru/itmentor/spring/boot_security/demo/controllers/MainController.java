@@ -1,14 +1,18 @@
 package ru.itmentor.spring.boot_security.demo.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import ru.itmentor.spring.boot_security.demo.services.PersonService;
 
-@Controller
-@RequestMapping("/")
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.itmentor.spring.boot_security.demo.models.Person;
+import ru.itmentor.spring.boot_security.demo.services.PersonService;
+import ru.itmentor.spring.boot_security.demo.util.PersonErrorResponce;
+import ru.itmentor.spring.boot_security.demo.util.PersonNotFoundException;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/people")
 public class MainController {
 
     private final PersonService personService;
@@ -17,21 +21,21 @@ public class MainController {
         this.personService = personService;
     }
 
-
-    @GetMapping
-    public String getAll(Model model){
-        model.addAttribute("person", personService.getAll());
-        return "/userlist";
+    @GetMapping("")
+    public List<Person> sayHello(){
+        return personService.getAll();
     }
 
     @GetMapping("/{id}")
-    public String showById(@PathVariable("id") int id, Model model){
-        model.addAttribute("person", personService.fingById(id));
-        return "user";
+    public Person showById(@PathVariable("id") int id){
+        return personService.findById(id);
     }
-
-
-
-
-
+    @ExceptionHandler
+    private ResponseEntity<PersonErrorResponce> handleException(PersonNotFoundException e){
+        PersonErrorResponce response = new PersonErrorResponce(
+                "Нет пользователя с таким ID",
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

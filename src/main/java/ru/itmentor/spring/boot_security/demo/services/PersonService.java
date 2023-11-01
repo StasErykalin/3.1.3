@@ -8,6 +8,7 @@ import ru.itmentor.spring.boot_security.demo.models.Person;
 import ru.itmentor.spring.boot_security.demo.models.Role;
 import ru.itmentor.spring.boot_security.demo.repositories.PeopleRepository;
 import ru.itmentor.spring.boot_security.demo.repositories.RoleRepository;
+import ru.itmentor.spring.boot_security.demo.util.PersonNotFoundException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ public class PersonService {
 
     private final RoleRepository roleRepository;
     private final PeopleRepository peopleRepository;
+
     @Autowired
     public PersonService(RoleRepository roleRepository, PeopleRepository peopleRepository) {
         this.roleRepository = roleRepository;
@@ -32,28 +34,39 @@ public class PersonService {
     }
 
     @Transactional
-    public void addNewPerson(Person person){
-        Set<Role> roles  = new HashSet<>();
+    public void addNewPerson(Person person) {
+        Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("ROLE_USER"));
         person.setRole(roles);
         peopleRepository.save(person);
     }
+
     @Transactional
-    public List<Person> getAll(){
+    public List<Person> getAll() {
         return peopleRepository.findAll();
     }
+
     @Transactional
-    public Person fingById(int id){
-        return peopleRepository.getById(id);
+    public Person findById(int id) {
+        Optional<Person> foundPerson = peopleRepository.findById(id);
+        return foundPerson.orElseThrow(PersonNotFoundException::new);
     }
+
     @Transactional
-    public void delete(int id){
+    public void delete(int id) {
         peopleRepository.deleteById(id);
     }
 
     @Transactional
-    public void update(Person person){
-        peopleRepository.save(person);
+    public Person update(Person updatedPerson, int id) {
+        Optional<Person> personOptional = peopleRepository.findById(id);
+        Person personForUpdating = personOptional.get();
+            personForUpdating.setName(updatedPerson.getName());
+            personForUpdating.setUsername(updatedPerson.getUsername());
+            personForUpdating.setPassword(updatedPerson.getPassword());
+            peopleRepository.save(personForUpdating);
+
+        return personForUpdating;
     }
 
 
